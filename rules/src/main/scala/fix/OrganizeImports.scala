@@ -277,12 +277,12 @@ class OrganizeImports(config: OrganizeImportsConfig) extends SemanticRule("Organ
 
       importer match {
         case Importer(_, Importee.Wildcard() :: Nil) =>
-          syntax.patch(syntax.lastIndexOfSlice("._"), ".\0", 2)
+          syntax.patch(syntax.lastIndexOfSlice("._"), ".\u0000", 2)
 
         case _ if isCurlyBraced(importer) =>
           syntax
-            .replaceFirst("[{]", "\2")
-            .patch(syntax.lastIndexOf("}"), "\2", 1)
+            .replaceFirst("[{]", "\u0002")
+            .patch(syntax.lastIndexOf("}"), "\u0002", 1)
 
         case _ => syntax
       }

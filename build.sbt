@@ -1,4 +1,3 @@
-lazy val v = _root_.scalafix.sbt.BuildInfo
 
 inThisBuild(
   List(
@@ -13,7 +12,7 @@ inThisBuild(
         url("https://github.com/liancheng")
       )
     ),
-    scalaVersion := v.scala212,
+    scalaVersion := "2.13.2",
     scalacOptions ++= List(
       "-Yrangepos",
       "-P:semanticdb:synthetics:on"
@@ -24,7 +23,7 @@ inThisBuild(
       "org.slf4j" % "slf4j-api" % "1.7.25",
       "com.lihaoyi" %% "sourcecode" % "0.2.1"
     ),
-    addCompilerPlugin(scalafixSemanticdb),
+    addCompilerPlugin("org.scalameta" % "semanticdb-scalac_2.13.2" % "4.3.10"),
     scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.3.0",
     // Super shell output often messes up Scalafix test output.
     useSuperShell := false
@@ -37,7 +36,7 @@ lazy val rules = project
   .settings(
     moduleName := "organize-imports",
     dependencyOverrides += "com.lihaoyi" %% "sourcecode" % "0.2.1",
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % v.scalafixVersion,
+    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15+46-4c23fac1-SNAPSHOT",
     scalacOptions ++= List("-Ywarn-unused")
   )
 
@@ -65,7 +64,7 @@ lazy val tests = project
     skip in publish := true,
     scalacOptions ++= List("-Ywarn-unused"),
     libraryDependencies +=
-      "ch.epfl.scala" % "scalafix-testkit" % v.scalafixVersion % Test cross CrossVersion.full,
+      "ch.epfl.scala" % "scalafix-testkit" % "0.9.15+46-4c23fac1-SNAPSHOT" % Test cross CrossVersion.full,
     (compile in Compile) := (compile in Compile)
       .dependsOn(
         compile in (input, Compile),
