@@ -36,8 +36,11 @@ lazy val rules = project
   .settings(
     moduleName := "organize-imports",
     dependencyOverrides += "com.lihaoyi" %% "sourcecode" % "0.2.1",
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15+46-4c23fac1-SNAPSHOT",
-    scalacOptions ++= List("-Ywarn-unused")
+    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15.2-SNAPSHOT",
+    scalacOptions ++= List("-Ywarn-unused"),
+    version := "0.3.1.2-SNAPSHOT",
+    credentials += Credentials("Sonatype Nexus Repository Manager", "127.0.0.1", "admin", "admin"),
+    publishTo := Some("Sonatype Nexus Repository Manager" at "http://127.0.0.1:8081/repository/maven-snapshots")
   )
 
 lazy val shared = project.settings(skip in publish := true)
@@ -64,7 +67,7 @@ lazy val tests = project
     skip in publish := true,
     scalacOptions ++= List("-Ywarn-unused"),
     libraryDependencies +=
-      "ch.epfl.scala" % "scalafix-testkit" % "0.9.15+46-4c23fac1-SNAPSHOT" % Test cross CrossVersion.full,
+      "ch.epfl.scala" % "scalafix-testkit" % "0.9.15.2-SNAPSHOT" % Test cross CrossVersion.full,
     (compile in Compile) := (compile in Compile)
       .dependsOn(
         compile in (input, Compile),

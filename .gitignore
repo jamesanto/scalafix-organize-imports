@@ -2,3 +2,5 @@
 .vscode/
 project/metals.sbt
 project/project/
+.DS_Store
+
